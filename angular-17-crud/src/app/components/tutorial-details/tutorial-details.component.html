@@ -12,6 +12,16 @@
       <label><strong>Status:</strong></label>
       {{ currentTutorial.published ? "Published" : "Pending" }}
     </div>
+
+    <div>
+      <label><strong>Comment:</strong></label>
+      {{ currentTutorial.comment }}
+    </div>
+
+    <div>
+      <label><strong>Sentiment:</strong></label>
+      {{ currentTutorial.sentiment }}
+    </div>
   
     <a class="badge badge-warning" routerLink="/tutorials/{{ currentTutorial.id }}">
       Edit
@@ -42,13 +52,38 @@
             name="description"
           />
         </div>
-  
         <div class="form-group">
           <label><strong>Status:</strong></label>
           {{ currentTutorial.published ? "Published" : "Pending" }}
         </div>
+
+        <div class="form-group">
+          <label for="comment">Comment</label>
+          <input
+            type="text"
+            class="form-control"
+            id="comment"
+            [(ngModel)]="currentTutorial.comment"
+            name="comment"
+            readonly
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="sentiment">Sentiment</label>
+          <input
+            type="text"
+            class="form-control"
+            id="sentiment"
+            [(ngModel)]="currentTutorial.sentiment"
+            name="sentiment"
+            readonly
+          />
+        </div>
+
+
       </form>
-  
+
       @if (currentTutorial.published) {
       <button class="badge badge-primary mr-2"
         (click)="updatePublished(false)" >

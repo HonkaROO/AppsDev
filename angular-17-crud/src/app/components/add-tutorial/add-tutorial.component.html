@@ -64,7 +64,7 @@
         </div>
   
         <div class="form-group">
-          <label for="comment">Comment</label>
+          <label for="comment">Leave a comment</label>
           <textarea
             class="form-control"
             id="comment"
@@ -75,10 +75,10 @@
         </div>
   
         <button (click)="analyzeSentiment()" class="btn btn-secondary">
-          Verify Sentiment
+          Add this Comment
         </button>
         <div *ngIf="sentimentResult">
-          <p>Sentiment: {{ sentimentResult }}</p>
+          <p>Comment's Sentiment: {{ sentimentResult }}</p>
         </div>
   
         <button (click)="saveTutorial()" class="btn btn-success" [disabled]="!sentimentResult">

@@ -15,7 +15,9 @@ export class TutorialDetailsComponent implements OnInit {
   @Input() currentTutorial: Tutorial = {
     title: '',
     description: '',
-    published: false
+    published: false,
+    comment: '',
+    sentiment: '',
   };
   
   message = '';
@@ -42,7 +44,7 @@ export class TutorialDetailsComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
-
+  
   updatePublished(status: boolean): void {
     const data = {
       title: this.currentTutorial.title,
