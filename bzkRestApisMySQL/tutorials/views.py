@@ -10,8 +10,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User
-import face_recognition
-import numpy as np
+from textblob import TextBlob
+from rest_framework.decorators import api_view
+from django.http import JsonResponse
+from rest_framework.parsers import JSONParser
+import requests
 
 @api_view(['GET', 'POST', 'DELETE'])
 def tutorial_list(request):
@@ -19,6 +22,7 @@ def tutorial_list(request):
         tutorials = Tutorial.objects.all()
         serializer = TutorialSerializer(tutorials, many=True)
         return JsonResponse(serializer.data, safe=False)
+    
     elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = TutorialSerializer(data=data)
@@ -26,6 +30,7 @@ def tutorial_list(request):
             serializer.save()
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     elif request.method == 'DELETE':
         Tutorial.objects.all().delete()
         return JsonResponse({'message': 'All tutorials have been deleted.'}, status=status.HTTP_204_NO_CONTENT)
@@ -64,25 +69,37 @@ class RegisterView(APIView):
         image = request.FILES['image']
         
         user = User(username=username, password=make_password(password))
-        user.save_face_encoding(image)
+        # user.save_face_encoding(image)
         user.save()
         return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
 
-class FaceLoginView(APIView):
-    def post(self, request):
-        image = request.FILES['image']
-        image = face_recognition.load_image_file(image)
-        encoding = face_recognition.face_encodings(image)[0]
+@api_view(['POST'])
+def analyze_sentiment(request):
+    comment = request.data.get('comment', '')
+    if not comment:
+        return Response({'error': 'Comment is required'}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        analysis = TextBlob(comment)
+        sentiment = 'positive' if analysis.sentiment.polarity > 0 else 'negative' if analysis.sentiment.polarity < 0 else 'neutral'
+        return Response({'sentiment': sentiment})
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        users = User.objects.all()
-        for user in users:
-            if user.face_encoding:
-                stored_encoding = np.frombuffer(user.face_encoding, dtype=np.float64)
-                matches = face_recognition.compare_faces([stored_encoding], encoding)
-                if matches[0]:
-                    return Response({'message': 'Login successful', 'username': user.username})
+# class FaceLoginView(APIView):
+#     def post(self, request):
+#         image = request.FILES['image']
+#         image = face_recognition.load_image_file(image)
+#         encoding = face_recognition.face_encodings(image)[0]
 
-        return Response({'message': 'Login failed'}, status=status.HTTP_401_UNAUTHORIZED)
+#         users = User.objects.all()
+#         for user in users:
+#             if user.face_encoding:
+#                 stored_encoding = np.frombuffer(user.face_encoding, dtype=np.float64)
+#                 matches = face_recognition.compare_faces([stored_encoding], encoding)
+#                 if matches[0]:
+#                     return Response({'message': 'Login successful', 'username': user.username})
+
+#         return Response({'message': 'Login failed'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class PasswordLoginView(APIView):
     def post(self, request):

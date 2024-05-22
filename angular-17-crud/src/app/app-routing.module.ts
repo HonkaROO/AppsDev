@@ -4,6 +4,7 @@ import { TutorialsListComponent } from './components/tutorials-list/tutorials-li
 import { TutorialDetailsComponent } from './components/tutorial-details/tutorial-details.component';
 import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
 import { LoginComponent } from './login/login.component';
+// import { SentimentAnalysisComponent } from './sentiment-analysis/sentiment-analysis.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'tutorials', component: TutorialsListComponent },
   { path: 'tutorials/:id', component: TutorialDetailsComponent },
   { path: 'add', component: AddTutorialComponent },
+  // { path: 'add-sentiment-analysis', component: SentimentAnalysisComponent },
 ];
 
 @NgModule({

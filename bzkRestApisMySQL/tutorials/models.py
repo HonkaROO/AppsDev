@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
-import numpy as np
-import face_recognition
+# import numpy as np
+# import face_recognition
 
 class Tutorial(models.Model):
     title = models.CharField(max_length=70, blank=False, default='')
     description = models.CharField(max_length=200,blank=False, default='')
+    comment = models.TextField(blank=True, default='')
+    sentiment = models.CharField(max_length=20, blank=True, default='')
     published = models.BooleanField(default=False)
 
 class User(AbstractUser):
@@ -26,8 +28,8 @@ class User(AbstractUser):
         verbose_name='user permissions',
     )
 
-    def save_face_encoding(self, image_path):
-        image = face_recognition.load_image_file(image_path)
-        encoding = face_recognition.face_encodings(image)[0]
-        self.face_encoding = np.array(encoding).tobytes()
-        self.save()
+    # def save_face_encoding(self, image_path):
+    #     image = face_recognition.load_image_file(image_path)
+    #     encoding = face_recognition.face_encodings(image)[0]
+    #     self.face_encoding = np.array(encoding).tobytes()
+    #     self.save()

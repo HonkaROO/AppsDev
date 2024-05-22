@@ -9,8 +9,9 @@ import { TutorialsListComponent } from './components/tutorials-list/tutorials-li
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { CameraComponent } from './camera/camera.component';
-import { WebcamModule } from 'ngx-webcam';
+// import { CameraComponent } from './camera/camera.component';
+// import { WebcamModule } from 'ngx-webcam';
+// import { SentimentAnalysisComponent } from './sentiment-analysis/sentiment-analysis.component';
 
 
 
@@ -21,14 +22,15 @@ import { WebcamModule } from 'ngx-webcam';
     TutorialDetailsComponent,
     TutorialsListComponent,
     LoginComponent,
-    CameraComponent
+    // CameraComponent,
+    // SentimentAnalysisComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    WebcamModule
+    // WebcamModule
   ],
   providers: [],
   bootstrap: [AppComponent]

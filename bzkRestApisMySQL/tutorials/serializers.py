@@ -9,4 +9,6 @@ class TutorialSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'title',
                   'description',
+                  'comment',
+                  'sentiment',
                   'published')

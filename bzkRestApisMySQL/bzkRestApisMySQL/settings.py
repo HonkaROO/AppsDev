@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'tutorials.apps.TutorialsConfig',
     'corsheaders',
+    # 'tutorials',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,6 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
 )
+
+APPEND_SLASH = False
+DEBUG = True
