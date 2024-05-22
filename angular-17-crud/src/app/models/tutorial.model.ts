@@ -6,3 +6,5 @@ export class Tutorial {
     comment?: string;
     sentiment?: string;
   }
+
+//models
