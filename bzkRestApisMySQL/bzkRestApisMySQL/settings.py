@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'tutorials.apps.TutorialsConfig',
     'corsheaders',
-    # 'tutorials',
+    'accounts',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -48,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'bzkRestApisMySQL.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sampledjango',
+        'NAME': 'finals-appsdev2',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
@@ -139,5 +140,17 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
 )
 
-APPEND_SLASH = False
-DEBUG = True
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+}
